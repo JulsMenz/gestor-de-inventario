@@ -1,0 +1,24 @@
+{
+	"name": "backend",
+	"version": "1.0.50",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts",
+		"db:push": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx drizzle-kit push",
+		"db:studio": "NODE_TLS_REJECT_UNAUTHORIZED=0 bunx drizzle-kit studio"
+	},
+	"dependencies": {
+		"@elysia/cors": "^1.4.2",
+		"@elysia/jwt": "^1.4.2",
+		"@elysia/static": "^1.4.11",
+		"drizzle-orm": "^0.45.2",
+		"elysia": "latest",
+		"pg": "^8.21.0"
+	},
+	"devDependencies": {
+		"@types/pg": "^8.20.0",
+		"bun-types": "latest",
+		"drizzle-kit": "^0.31.10"
+	},
+	"module": "src/index.js"
+}
