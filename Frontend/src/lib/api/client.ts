@@ -40,14 +40,14 @@ export const getCategorias = (params?: { tenderoId?: number; }) =>
 	const q = new URLSearchParams();
 	if (params?.tenderoId) q.set('tenderoId', String(params.tenderoId));
 	const qs = q.toString();
-	return req<Categoria[]>(`/api/categorias/${qs ? `?${qs}` : ''}`);
+	return req<Categoria[]>(`/categorias/${qs ? `?${qs}` : ''}`);
 };
 export const createCategoria = (data: { nombre: string; descripcion?: string; }) =>
-	req<Categoria>('/api/categorias/', { method: 'POST', body: JSON.stringify(data) }, true);
+	req<Categoria>('/categorias/', { method: 'POST', body: JSON.stringify(data) }, true);
 export const updateCategoria = (id: number, data: { nombre?: string; descripcion?: string; }) =>
-	req<Categoria>(`/api/categorias/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true);
+	req<Categoria>(`/categorias/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true);
 export const deleteCategoria = (id: number) =>
-	req<void>(`/api/categorias/${id}`, { method: 'DELETE' }, true);
+	req<void>(`/categorias/${id}`, { method: 'DELETE' }, true);
 
 // ── Productos ────────────────────────────────────────────────────────────────
 export const getProductos = (params?: { categoriaId?: number; buscar?: string; tenderoId?: number; }) =>
@@ -57,47 +57,47 @@ export const getProductos = (params?: { categoriaId?: number; buscar?: string; t
 	if (params?.buscar) q.set('buscar', params.buscar);
 	if (params?.tenderoId) q.set('tenderoId', String(params.tenderoId));
 	const qs = q.toString();
-	return req<Producto[]>(`/api/productos/${qs ? `?${qs}` : ''}`);
+	return req<Producto[]>(`/productos/${qs ? `?${qs}` : ''}`);
 };
 export const createProducto = (data: {
 	nombre: string; descripcion?: string;
 	precio: number; cantidad: number; categoriaId?: number;
-}) => req<Producto>('/api/productos/', { method: 'POST', body: JSON.stringify(data) }, true);
+}) => req<Producto>('/productos/', { method: 'POST', body: JSON.stringify(data) }, true);
 export const updateProducto = (id: number, data: Partial<{
 	nombre: string; descripcion: string;
 	precio: number; cantidad: number; categoriaId: number | null;
-}>) => req<Producto>(`/api/productos/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true);
+}>) => req<Producto>(`/productos/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true);
 export const deleteProducto = (id: number) =>
-	req<void>(`/api/productos/${id}`, { method: 'DELETE' }, true);
+	req<void>(`/productos/${id}`, { method: 'DELETE' }, true);
 
 // ── Tiendas ──────────────────────────────────────────────────────────────────
-export const getTiendas = () => req<Tienda[]>('/api/tiendas/');
+export const getTiendas = () => req<Tienda[]>('/tiendas/');
 export const getTienda = (slug: string, params?: { buscar?: string; categoriaId?: number; }) =>
 {
 	const q = new URLSearchParams();
 	if (params?.buscar) q.set('buscar', params.buscar);
 	if (params?.categoriaId) q.set('categoriaId', String(params.categoriaId));
 	const qs = q.toString();
-	return req<{ tienda: Tienda; productos: Producto[]; }>(`/api/tiendas/${slug}${qs ? `?${qs}` : ''}`);
+	return req<{ tienda: Tienda; productos: Producto[]; }>(`/tiendas/${slug}${qs ? `?${qs}` : ''}`);
 };
 
 // ── Auth ─────────────────────────────────────────────────────────────────────
 export const registrarse = (data: {
 	nombre: string; email: string; password: string;
 	tipo: 'tendero' | 'cliente'; nombreTienda?: string;
-}) => req<{ token: string; usuario: Usuario; }>('/api/auth/registro', { method: 'POST', body: JSON.stringify(data) });
+}) => req<{ token: string; usuario: Usuario; }>('/auth/registro', { method: 'POST', body: JSON.stringify(data) });
 
 export const iniciarSesion = (data: { email: string; password: string; }) =>
-	req<{ token: string; usuario: Usuario; }>('/api/auth/login', { method: 'POST', body: JSON.stringify(data) });
+	req<{ token: string; usuario: Usuario; }>('/auth/login', { method: 'POST', body: JSON.stringify(data) });
 
 // ── Pedidos ──────────────────────────────────────────────────────────────────
 export const crearPedido = (data: {
 	nombreContacto?: string;
 	telefonoContacto?: string;
 	items: { productoId: number; cantidad: number; }[];
-}) => req<Pedido[]>('/api/pedidos/', { method: 'POST', body: JSON.stringify(data) }, true);
+}) => req<Pedido[]>('/pedidos/', { method: 'POST', body: JSON.stringify(data) }, true);
 
-export const getPedidos = () => req<Pedido[]>('/api/pedidos/', {}, true);
+export const getPedidos = () => req<Pedido[]>('/pedidos/', {}, true);
 
 export const actualizarEstadoPedido = (id: number, estado: EstadoPedido) =>
-	req<Pedido>(`/api/pedidos/${id}`, { method: 'PATCH', body: JSON.stringify({ estado }) }, true);
+	req<Pedido>(`/pedidos/${id}`, { method: 'PATCH', body: JSON.stringify({ estado }) }, true);
